@@ -1,18 +1,9 @@
-const { Pool } = require('pg');
-require('dotenv').config();
+const { PrismaClient } = require('@prisma/client');
 
-// إعداد الاتصال باستخدام المتغيرات من ملف .env
-const pool = new Pool({
-    user: process.env.DB_USER?.trim(),
-    host: process.env.DB_HOST?.trim(),
-    database: process.env.DB_DATABASE?.trim(),
-    password: process.env.DB_PASSWORD?.trim(),
-    port: process.env.DB_PORT?.trim(),
-    ssl: { rejectUnauthorized: false },
-});
+const globalForPrisma = globalThis;
 
-pool.on('connect', () => {
-    console.log('connect success🚀');
-});
+const prisma = globalForPrisma.prisma ?? new PrismaClient();
 
-module.exports = pool;
+if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
+
+module.exports = prisma;

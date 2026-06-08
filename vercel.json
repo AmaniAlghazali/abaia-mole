@@ -1,5 +1,5 @@
 {
-  "buildCommand": "cd abaia-frontend && npm install && npm run build && rm -rf ../public && cp -r dist ../public",
+  "buildCommand": "npx prisma generate && cd abaia-frontend && npm install && npm run build && rm -rf ../public && cp -r dist ../public",
   "outputDirectory": "public",
   "routes": [
     { "src": "/api/(.*)", "dest": "api/index.js" },

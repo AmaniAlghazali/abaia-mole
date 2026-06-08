@@ -123,6 +123,7 @@ const translations = {
     role: "الصلاحية",
     registeredAt: "تاريخ التسجيل",
     noUsers: "لا يوجد مستخدمين",
+    noInvoices: "لا توجد فواتير",
   },
   en: {
     name: "English",
@@ -246,6 +247,7 @@ const translations = {
     role: "Role",
     registeredAt: "Registered At",
     noUsers: "No users found",
+    noInvoices: "No invoices",
   },
 };
 
