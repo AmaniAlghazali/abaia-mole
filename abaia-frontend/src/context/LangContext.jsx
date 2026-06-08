@@ -91,14 +91,7 @@ const translations = {
     passwordPlaceholder: "كلمة المرور",
     addAdminBtn: "إضافة مدير ➕",
     // Errors
-    // Barcode
-    barcodeSearch: "بحث بالباركود",
-    barcode: "الباركود",
-    barcodePlaceholder: "أدخل رقم الباركود",
-    barcodeResult: "نتيجة البحث:",
-    notFound: "لم يتم العثور على المنتج",
-    scanBarcode: "📷 مسح الباركود",
-    barcodeSearchHint: "أدخل رقم الباركود المطبوع على العباية",
+    // Errors
     errorFetchData: "خطأ في جلب بيانات اللوحة",
     errorAddProduct: "حدث خطأ أثناء إضافة العباية",
     errorRegister: "حدث خطأ أثناء التسجيل",
@@ -223,14 +216,6 @@ const translations = {
     passwordPlaceholder: "Password",
     addAdminBtn: "Add Admin ➕",
     // Errors
-    // Barcode
-    barcodeSearch: "Barcode Search",
-    barcode: "Barcode",
-    barcodePlaceholder: "Enter barcode number",
-    barcodeResult: "Search result:",
-    notFound: "Product not found",
-    scanBarcode: "📷 Scan Barcode",
-    barcodeSearchHint: "Enter the barcode printed on the abaya",
     errorFetchData: "Error fetching dashboard data",
     errorAddProduct: "Error adding product",
     errorRegister: "Error during registration",

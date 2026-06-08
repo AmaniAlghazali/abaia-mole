@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../utils/api";
 import { useLang } from "../context/LangContext";
-import { ShoppingBag, Filter, X, Search } from "lucide-react";
+import { ShoppingBag, Filter, X } from "lucide-react";
 
 const styles = [
   { ar: "نص كلوش", en: "Half Cloche" },
@@ -20,9 +20,6 @@ const Shop = ({ addToCart }) => {
   const [loading, setLoading] = useState(true);
   const [activeStyle, setActiveStyle] = useState("all");
   const [showFilters, setShowFilters] = useState(false);
-  const [barcode, setBarcode] = useState("");
-  const [barcodeResult, setBarcodeResult] = useState(null);
-  const [barcodeLoading, setBarcodeLoading] = useState(false);
   const { t, lang } = useLang();
 
   useEffect(() => {
@@ -38,19 +35,6 @@ const Shop = ({ addToCart }) => {
     };
     fetchProducts();
   }, []);
-
-  const handleBarcodeSearch = async (val) => {
-    setBarcode(val);
-    if (!val.trim()) { setBarcodeResult(null); return; }
-    setBarcodeLoading(true);
-    try {
-      const res = await api.get(`/api/products/barcode/${val.trim()}`);
-      setBarcodeResult(res.data);
-    } catch {
-      setBarcodeResult(null);
-    }
-    setBarcodeLoading(false);
-  };
 
   const filteredProducts =
     activeStyle === "all"
@@ -142,42 +126,6 @@ const Shop = ({ addToCart }) => {
             </div>
           )}
         </div>
-      </div>
-
-      {/* Barcode Search */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6">
-        <div className="flex items-center gap-2 bg-base-100 rounded-xl shadow-sm border border-base-200 p-2 sm:p-3">
-          <Search size={18} className="text-base-content/40 shrink-0" />
-          <input
-            type="text"
-            inputMode="numeric"
-            value={barcode}
-            onChange={(e) => handleBarcodeSearch(e.target.value)}
-            placeholder={t("barcodeSearchHint")}
-            className="input input-ghost input-xs sm:input-sm w-full focus:outline-none"
-          />
-          {barcodeLoading && <span className="loading loading-spinner loading-xs" />}
-        </div>
-        {barcodeResult && (
-          <div className="mt-3 card bg-base-100 shadow-sm border border-primary/30 rounded-xl overflow-hidden cursor-pointer"
-            onClick={() => navigate(`/product/${barcodeResult.id}`)}>
-            <div className="card-body p-3 flex flex-row items-center gap-3">
-              {barcodeResult.image_url ? (
-                <img src={barcodeResult.image_url} alt="" className="w-14 h-14 rounded-lg object-cover" />
-              ) : (
-                <div className="w-14 h-14 rounded-lg bg-base-200 flex items-center justify-center text-xs text-base-content/30">🖼️</div>
-              )}
-              <div className="flex-1 min-w-0">
-                <p className="font-semibold text-sm truncate">{lang === "en" && barcodeResult.title_en ? barcodeResult.title_en : barcodeResult.title}</p>
-                <p className="text-xs text-base-content/50">{barcodeResult.price} {t("sar")} • {t("size")}: {barcodeResult.size}</p>
-              </div>
-              <span className="text-xs text-primary">{t("barcodeResult")}</span>
-            </div>
-          </div>
-        )}
-        {barcode && !barcodeLoading && !barcodeResult && (
-          <p className="text-xs text-error mt-1 px-1">{t("notFound")}</p>
-        )}
       </div>
 
       {/* Products Grid */}

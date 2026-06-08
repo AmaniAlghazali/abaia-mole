@@ -47,7 +47,6 @@ model products {
   color_en       String?       @db.VarChar(100)
   style          String?       @db.VarChar(100)
   style_en       String?       @db.VarChar(100)
-  barcode        String?       @db.VarChar(100)
   order_items    order_items[]
 }
 
