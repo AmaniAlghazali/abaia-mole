@@ -27,7 +27,7 @@ const Navbar = ({ totalItems }) => {
   }, [location.pathname]);
 
   return (
-    <div className="navbar bg-base-100/90 backdrop-blur-md shadow-sm border-b border-base-200 px-1 sm:px-6 lg:px-8 sticky top-0 z-50 min-h-12 sm:min-h-16">
+    <div className="navbar bg-base-100/90 backdrop-blur-md shadow-sm border-b border-base-200 px-1 sm:px-6 lg:px-8 sticky top-0 z-50 min-h-12 sm:min-h-16 overflow-hidden">
       <div className="navbar-start">
         <button
           className="btn btn-ghost btn-xs sm:btn-sm lg:hidden"
@@ -43,9 +43,8 @@ const Navbar = ({ totalItems }) => {
       </div>
 
       <div className="navbar-center sm:hidden">
-        <Link to="/" className="flex items-center gap-1 text-xs font-bold">
-          <Crown className="text-warning" size={14} />
-          <span className="truncate max-w-28">{t("brand")}</span>
+        <Link to="/" className="flex items-center">
+          <Crown className="text-warning" size={16} />
         </Link>
       </div>
 
@@ -57,9 +56,9 @@ const Navbar = ({ totalItems }) => {
       </div>
 
       <div className="navbar-end gap-0">
-        <button onClick={toggleLang} className="btn btn-ghost btn-xs sm:btn-sm gap-0.5 sm:gap-1 px-1 sm:px-2" title={lang === "ar" ? "English" : "العربية"}>
+        <button onClick={toggleLang} className="btn btn-ghost btn-xs sm:btn-sm btn-square" title={lang === "ar" ? "English" : "العربية"}>
           <Languages size={14} />
-          <span className="text-[10px] sm:text-xs font-bold">{lang === "ar" ? "EN" : "AR"}</span>
+          <span className="hidden sm:inline text-xs font-bold">{lang === "ar" ? "EN" : "AR"}</span>
         </button>
 
         {!user && (
