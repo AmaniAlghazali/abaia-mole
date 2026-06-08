@@ -5,7 +5,7 @@ export async function loadSegmenter() {
   return true;
 }
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+const API_URL = import.meta.env.VITE_API_URL || '';
 
 export async function recolorWithAI(imageUrl, targetHex) {
   const resp = await fetch(`${API_URL}/api/recolor`, {

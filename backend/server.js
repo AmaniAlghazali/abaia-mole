@@ -27,12 +27,7 @@ app.get('/', (req, res) => {
 
 
 const PORT = process.env.PORT || 5000;
-
-if (!process.env.VERCEL) {
-    app.listen(PORT, async () => {
-        console.log(`Server is running on port ${PORT}`);
-        console.log("Server is connected to database 🟢");
-    });
-}
-
-module.exports = app;
+app.listen(PORT, async () => {
+    console.log(`Server is running on port ${PORT}`);
+    console.log("Server is connected to database 🟢");
+});
