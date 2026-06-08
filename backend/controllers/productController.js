@@ -3,7 +3,7 @@ const cloudinary = require('../config/cloudinary');
 
 const addProduct = async (req, res) => {
     try {
-        const { title, description, price, size, color, fabric_type, quantity, title_en, description_en, fabric_type_en, color_en, style, style_en } = req.body;
+        const { title, description, price, size, color, fabric_type, quantity, title_en, description_en, fabric_type_en, color_en, style, style_en, barcode } = req.body;
         
         let image_url = '';
         if (req.file) {
@@ -31,6 +31,7 @@ const addProduct = async (req, res) => {
                 color_en: color_en || null,
                 style: style || null,
                 style_en: style_en || null,
+                barcode: barcode || null,
             },
         });
         res.status(201).json({ message: "تم إضافة العباية بنجاح إلى المخزون! ✅", product });
@@ -68,7 +69,7 @@ const getAllProductsAdmin = async (req, res) => {
 const updateProduct = async (req, res) => {
     try {
         const { id } = req.params;
-        const { title, description, price, size, color, fabric_type, quantity, title_en, description_en, fabric_type_en, color_en, style, style_en } = req.body;
+        const { title, description, price, size, color, fabric_type, quantity, title_en, description_en, fabric_type_en, color_en, style, style_en, barcode } = req.body;
 
         let image_url = undefined;
         if (req.file) {
@@ -90,6 +91,7 @@ const updateProduct = async (req, res) => {
         if (color_en !== undefined) data.color_en = color_en;
         if (style !== undefined) data.style = style;
         if (style_en !== undefined) data.style_en = style_en;
+        if (barcode !== undefined) data.barcode = barcode;
         if (image_url !== undefined) data.image_url = image_url;
 
         const product = await prisma.products.update({
@@ -161,6 +163,22 @@ const getProductById = async (req, res) => {
     }
 };
 
+const getProductByBarcode = async (req, res) => {
+    try {
+        const { barcode } = req.params;
+        const product = await prisma.products.findFirst({
+            where: { barcode, quantity: { gt: 0 } },
+        });
+        if (!product) {
+            return res.status(404).json({ message: "المنتج غير موجود" });
+        }
+        res.status(200).json(product);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "حدث خطأ أثناء البحث عن المنتج" });
+    }
+};
+
 module.exports = {
     addProduct,
     getAllProducts,
@@ -168,5 +186,6 @@ module.exports = {
     updateProduct,
     deleteProduct,
     updateStock,
-    getProductById
+    getProductById,
+    getProductByBarcode
 };

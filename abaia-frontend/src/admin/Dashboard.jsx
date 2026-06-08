@@ -35,7 +35,7 @@ const Dashboard = () => {
   const [addingProduct, setAddingProduct] = useState(false);
   const [newProduct, setNewProduct] = useState({
     title: "", description: "", price: "", quantity: "", size: "M", color: "أسود",
-    fabric_type: "", style: "", title_en: "", color_en: "", fabric_type_en: "", description_en: "", style_en: "",
+    fabric_type: "", style: "", title_en: "", color_en: "", fabric_type_en: "", description_en: "", style_en: "", barcode: "",
   });
   const [newProductImageFile, setNewProductImageFile] = useState(null);
   const [newProductImagePreview, setNewProductImagePreview] = useState(null);
@@ -251,6 +251,8 @@ const Dashboard = () => {
                     <option value="">{t("selectStyle")}</option>
                     {styles.map((s) => <option key={s.ar} value={s.ar}>{s.ar}</option>)}
                   </select>
+                  <input type="text" className="input input-bordered w-full input-sm sm:input-md" placeholder={t("barcode")}
+                    value={newProduct.barcode} onChange={(e) => setNewProduct({ ...newProduct, barcode: e.target.value })} />
                   <div className="sm:col-span-2">
                     <input type="file" accept="image/*" className="file-input file-input-bordered w-full file-input-sm sm:file-input-md"
                       onChange={(e) => {
@@ -286,7 +288,7 @@ const Dashboard = () => {
                     <div className="flex-1 min-w-0">
                       <p className="font-medium text-sm truncate">{p.title || "—"}</p>
                       <p className="text-xs text-base-content/50">{p.price} {t("sar")} • {t("qtyPlaceholder")}: {p.quantity}</p>
-                      <p className="text-xs text-base-content/40">{t("size")}: {p.size} • {p.color}</p>
+                      <p className="text-xs text-base-content/40">{t("size")}: {p.size} • {p.color}{p.barcode ? " • " + t("barcode") + ": " + p.barcode : ""}</p>
                     </div>
                     <div className="flex gap-1">
                       <button onClick={() => openEditProduct(p)} className="btn btn-ghost btn-xs btn-square text-info"><Pencil size={14} /></button>
@@ -305,6 +307,7 @@ const Dashboard = () => {
                     <th className="ps-5">#</th>
                     <th>{t("image")}</th>
                     <th>{lang === "ar" ? "الاسم" : "Title"}</th>
+                    <th>{t("barcode")}</th>
                     <th>{t("pricePlaceholder")}</th>
                     <th>{t("qtyPlaceholder")}</th>
                     <th>{t("color")}</th>
@@ -315,13 +318,14 @@ const Dashboard = () => {
                 </thead>
                 <tbody>
                   {products.length === 0 && (
-                    <tr><td colSpan={9} className="text-center py-10 text-base-content/30">{t("noProductsAdmin")}</td></tr>
+                    <tr><td colSpan={10} className="text-center py-10 text-base-content/30">{t("noProductsAdmin")}</td></tr>
                   )}
                   {products.map((p, i) => (
                     <tr key={p.id} className="hover:bg-base-200/50 transition-colors">
                       <td className="ps-5 font-mono text-xs">{i + 1}</td>
                       <td>{p.image_url ? <img src={p.image_url} alt="" className="w-12 h-12 object-cover rounded-lg shadow-sm" /> : <div className="w-12 h-12 rounded-lg bg-base-200 flex items-center justify-center text-xs text-base-content/30">{t("noImage")}</div>}</td>
                       <td className="font-medium">{p.title || "—"}</td>
+                      <td className="font-mono text-xs">{p.barcode || "—"}</td>
                       <td className="font-mono">{p.price} {t("sar")}</td>
                       <td><span className={`badge badge-sm ${p.quantity > 0 ? "badge-success" : "badge-error"} gap-1`}>{p.quantity}</span></td>
                       <td><div className="flex items-center gap-2"><div className="w-4 h-4 rounded-full border border-base-300" style={{ backgroundColor: colorMap[p.color] || "#ccc" }} /><span className="text-sm">{p.color}</span></div></td>
@@ -487,12 +491,14 @@ const Dashboard = () => {
                   onChange={(e) => setEditingProduct({ ...editingProduct, size: e.target.value })}>
                   {sizes.map((s) => <option key={s} value={s}>{s}</option>)}
                 </select>
-                <input type="file" accept="image/*" className="file-input file-input-bordered w-full file-input-sm sm:col-span-2"
-                  onChange={(e) => {
-                    const file = e.target.files[0];
-                    setProductImageFile(file);
-                    setProductImagePreview(file ? URL.createObjectURL(file) : null);
-                  }} />
+                  <input type="text" className="input input-bordered w-full input-sm" placeholder={t("barcode")}
+                    value={editingProduct.barcode || ""} onChange={(e) => setEditingProduct({ ...editingProduct, barcode: e.target.value })} />
+                  <input type="file" accept="image/*" className="file-input file-input-bordered w-full file-input-sm sm:col-span-2"
+                    onChange={(e) => {
+                      const file = e.target.files[0];
+                      setProductImageFile(file);
+                      setProductImagePreview(file ? URL.createObjectURL(file) : null);
+                    }} />
                 {(productImagePreview || editingProduct.image_url) && (
                   <div className="sm:col-span-2">
                     <img src={productImagePreview || editingProduct.image_url} alt="" className="w-14 h-14 object-cover rounded-lg border" />
