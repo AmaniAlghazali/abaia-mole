@@ -3,11 +3,11 @@ require('dotenv').config();
 
 // إعداد الاتصال باستخدام المتغيرات من ملف .env
 const pool = new Pool({
-    user: process.env.DB_USER,
-    host: process.env.DB_HOST,
-    database: process.env.DB_DATABASE,
-    password: process.env.DB_PASSWORD,
-    port: process.env.DB_PORT,
+    user: process.env.DB_USER?.trim(),
+    host: process.env.DB_HOST?.trim(),
+    database: process.env.DB_DATABASE?.trim(),
+    password: process.env.DB_PASSWORD?.trim(),
+    port: process.env.DB_PORT?.trim(),
     ssl: { rejectUnauthorized: false },
 });
 
