@@ -223,8 +223,73 @@ const Dashboard = () => {
           <div className="bg-white dark:bg-base-100 rounded-2xl shadow-lg border border-base-200 overflow-hidden">
             <div className="flex items-center justify-between p-5 border-b border-base-200">
               <h3 className="text-lg font-bold">{t("allProducts")} <span className="text-base-content/40 text-sm font-normal">({products.length})</span></h3>
-              <button onClick={() => setAddingProduct(true)} className="btn btn-primary btn-sm">+ {lang === "ar" ? "إضافة منتج" : "Add Product"}</button>
+              <button onClick={() => setAddingProduct(!addingProduct)} className="btn btn-primary btn-sm">+ {lang === "ar" ? "إضافة منتج" : "Add Product"}</button>
             </div>
+            {addingProduct && (
+              <div className="p-5 border-b border-base-200 bg-base-100">
+                <h4 className="font-bold mb-3 text-base">{lang === "ar" ? "منتج جديد" : "New Product"}</h4>
+                <form onSubmit={handleAddProduct} className="space-y-3">
+                  <input type="text" className="input input-bordered w-full" placeholder={t("titlePlaceholder")}
+                    value={newProduct.title} onChange={(e) => setNewProduct({ ...newProduct, title: e.target.value })} required />
+                  <textarea className="textarea textarea-bordered w-full" rows={2} placeholder={t("descPlaceholder")}
+                    value={newProduct.description} onChange={(e) => setNewProduct({ ...newProduct, description: e.target.value })} />
+                  <div className="grid grid-cols-2 gap-3">
+                    <input type="number" className="input input-bordered w-full" placeholder={t("pricePlaceholder")}
+                      value={newProduct.price} onChange={(e) => setNewProduct({ ...newProduct, price: e.target.value })} required />
+                    <input type="number" className="input input-bordered w-full" placeholder={t("qtyPlaceholder")}
+                      value={newProduct.quantity} onChange={(e) => setNewProduct({ ...newProduct, quantity: e.target.value })} required />
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    <select className="select select-bordered w-full" value={newProduct.color}
+                      onChange={(e) => setNewProduct({ ...newProduct, color: e.target.value })}>
+                      {colorKeys.map((c) => <option key={c} value={c}>{c}</option>)}
+                    </select>
+                    <select className="select select-bordered w-full" value={newProduct.size}
+                      onChange={(e) => setNewProduct({ ...newProduct, size: e.target.value })}>
+                      {[52, 54, 56, 58, 60].map((s) => <option key={s} value={s}>{s}</option>)}
+                    </select>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="flex-1">
+                      <input type="file" accept="image/*" className="file-input file-input-bordered w-full"
+                        onChange={(e) => {
+                          const file = e.target.files[0];
+                          setNewProductImageFile(file);
+                          setNewProductImagePreview(file ? URL.createObjectURL(file) : null);
+                        }} />
+                    </div>
+                    {newProductImagePreview && (
+                      <img src={newProductImagePreview} alt="" className="w-14 h-14 object-cover rounded-lg border border-base-300" />
+                    )}
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    <input type="text" className="input input-bordered w-full" placeholder={t("fabricPlaceholder")}
+                      value={newProduct.fabric_type} onChange={(e) => setNewProduct({ ...newProduct, fabric_type: e.target.value })} />
+                    <select className="select select-bordered w-full" value={newProduct.style}
+                      onChange={(e) => {
+                        const selected = styles.find((s) => s.ar === e.target.value);
+                        setNewProduct({ ...newProduct, style: e.target.value, style_en: selected ? selected.en : "" });
+                      }}>
+                      <option value="">{t("selectStyle")}</option>
+                      {styles.map((s) => <option key={s.ar} value={s.ar}>{s.ar}</option>)}
+                    </select>
+                  </div>
+                  <div className="divider text-xs opacity-50">{lang === "ar" ? "— الإنجليزية —" : "— English —"}</div>
+                  <input type="text" className="input input-bordered w-full" placeholder={t("englishTitlePlaceholder")}
+                    value={newProduct.title_en} onChange={(e) => setNewProduct({ ...newProduct, title_en: e.target.value })} />
+                  <div className="grid grid-cols-2 gap-3">
+                    <input type="text" className="input input-bordered w-full" placeholder={t("englishColorPlaceholder")}
+                      value={newProduct.color_en} onChange={(e) => setNewProduct({ ...newProduct, color_en: e.target.value })} />
+                    <input type="text" className="input input-bordered w-full" placeholder={t("englishFabricPlaceholder")}
+                      value={newProduct.fabric_type_en} onChange={(e) => setNewProduct({ ...newProduct, fabric_type_en: e.target.value })} />
+                  </div>
+                  <div className="flex gap-3 pt-2">
+                    <button type="submit" className="btn btn-primary">{lang === "ar" ? "إضافة" : "Add"}</button>
+                    <button type="button" onClick={() => { setAddingProduct(false); setNewProductImageFile(null); setNewProductImagePreview(null); }} className="btn btn-ghost">{t("cancel")}</button>
+                  </div>
+                </form>
+              </div>
+            )}
             <div className="overflow-x-auto">
               <table className="table table-zebra w-full">
                 <thead>
@@ -401,75 +466,6 @@ const Dashboard = () => {
           </div>
         </div>
         <form method="dialog" className="modal-backdrop" onClick={() => setDeleteTarget(null)}>
-          <button>close</button>
-        </form>
-      </dialog>
-
-      <dialog className={`modal ${addingProduct ? "modal-open" : ""}`}>
-        <div className="modal-box rounded-2xl shadow-2xl max-w-lg">
-          <h3 className="font-bold text-lg mb-4">{lang === "ar" ? "إضافة منتج جديد" : "Add New Product"}</h3>
-          <form onSubmit={handleAddProduct} className="space-y-3">
-            <input type="text" className="input input-bordered w-full" placeholder={t("titlePlaceholder")}
-              value={newProduct.title} onChange={(e) => setNewProduct({ ...newProduct, title: e.target.value })} required />
-            <textarea className="textarea textarea-bordered w-full" rows={2} placeholder={t("descPlaceholder")}
-              value={newProduct.description} onChange={(e) => setNewProduct({ ...newProduct, description: e.target.value })} />
-            <div className="grid grid-cols-2 gap-3">
-              <input type="number" className="input input-bordered w-full" placeholder={t("pricePlaceholder")}
-                value={newProduct.price} onChange={(e) => setNewProduct({ ...newProduct, price: e.target.value })} required />
-              <input type="number" className="input input-bordered w-full" placeholder={t("qtyPlaceholder")}
-                value={newProduct.quantity} onChange={(e) => setNewProduct({ ...newProduct, quantity: e.target.value })} required />
-            </div>
-            <div className="grid grid-cols-2 gap-3">
-              <select className="select select-bordered w-full" value={newProduct.color}
-                onChange={(e) => setNewProduct({ ...newProduct, color: e.target.value })}>
-                {colorKeys.map((c) => <option key={c} value={c}>{c}</option>)}
-              </select>
-              <select className="select select-bordered w-full" value={newProduct.size}
-                onChange={(e) => setNewProduct({ ...newProduct, size: e.target.value })}>
-                {[52, 54, 56, 58, 60].map((s) => <option key={s} value={s}>{s}</option>)}
-              </select>
-            </div>
-            <div className="flex items-center gap-3">
-              <div className="flex-1">
-                <input type="file" accept="image/*" className="file-input file-input-bordered w-full"
-                  onChange={(e) => {
-                    const file = e.target.files[0];
-                    setNewProductImageFile(file);
-                    setNewProductImagePreview(file ? URL.createObjectURL(file) : null);
-                  }} />
-              </div>
-              {newProductImagePreview && (
-                <img src={newProductImagePreview} alt="" className="w-14 h-14 object-cover rounded-lg border border-base-300" />
-              )}
-            </div>
-            <div className="grid grid-cols-2 gap-3">
-              <input type="text" className="input input-bordered w-full" placeholder={t("fabricPlaceholder")}
-                value={newProduct.fabric_type} onChange={(e) => setNewProduct({ ...newProduct, fabric_type: e.target.value })} />
-              <select className="select select-bordered w-full" value={newProduct.style}
-                onChange={(e) => {
-                  const selected = styles.find((s) => s.ar === e.target.value);
-                  setNewProduct({ ...newProduct, style: e.target.value, style_en: selected ? selected.en : "" });
-                }}>
-                <option value="">{t("selectStyle")}</option>
-                {styles.map((s) => <option key={s.ar} value={s.ar}>{s.ar}</option>)}
-              </select>
-            </div>
-            <div className="divider text-xs opacity-50">{lang === "ar" ? "— الإنجليزية —" : "— English —"}</div>
-            <input type="text" className="input input-bordered w-full" placeholder={t("englishTitlePlaceholder")}
-              value={newProduct.title_en} onChange={(e) => setNewProduct({ ...newProduct, title_en: e.target.value })} />
-            <div className="grid grid-cols-2 gap-3">
-              <input type="text" className="input input-bordered w-full" placeholder={t("englishColorPlaceholder")}
-                value={newProduct.color_en} onChange={(e) => setNewProduct({ ...newProduct, color_en: e.target.value })} />
-              <input type="text" className="input input-bordered w-full" placeholder={t("englishFabricPlaceholder")}
-                value={newProduct.fabric_type_en} onChange={(e) => setNewProduct({ ...newProduct, fabric_type_en: e.target.value })} />
-            </div>
-            <div className="modal-action gap-3">
-              <button type="button" onClick={() => { setAddingProduct(false); setNewProductImageFile(null); setNewProductImagePreview(null); }} className="btn btn-ghost">{t("cancel")}</button>
-              <button type="submit" className="btn btn-primary">{lang === "ar" ? "إضافة" : "Add"}</button>
-            </div>
-          </form>
-        </div>
-        <form method="dialog" className="modal-backdrop" onClick={() => { setAddingProduct(false); setNewProductImageFile(null); setNewProductImagePreview(null); }}>
           <button>close</button>
         </form>
       </dialog>
