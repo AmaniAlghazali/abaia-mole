@@ -58,7 +58,7 @@ const Shop = ({ addToCart }) => {
           <div className="absolute bottom-10 right-10 w-96 h-96 bg-white rounded-full blur-3xl" />
         </div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20">
-          <div className="text-center" style={{ textAlign: lang === "ar" ? "center" : "center" }}>
+          <div className="text-center">
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-3 drop-shadow-sm">
               {lang === "ar" ? "عبايتي المتميزة" : "My Premium Abaya"}
             </h1>
@@ -140,7 +140,7 @@ const Shop = ({ addToCart }) => {
             {filteredProducts.map((product) => (
               <div
                 key={product.id}
-                className="card bg-base-100 shadow-sm hover:shadow-lg transition-all duration-300 cursor-pointer card-hover rounded-xl overflow-hidden border border-base-200/50"
+                className="card bg-base-100 shadow-sm hover:shadow-lg transition-all duration-300 cursor-pointer hover:-translate-y-0.5 rounded-xl overflow-hidden border border-base-200/50"
                 onClick={() => navigate(`/product/${product.id}`)}
               >
                 <figure className="relative aspect-[3/4] sm:aspect-[4/5] bg-base-200 overflow-hidden">

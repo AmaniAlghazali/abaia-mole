@@ -1,7 +1,8 @@
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 const pool = require('./config/db');
-require('dotenv').config();
+require('dotenv').config({ path: path.join(__dirname, '.env') });
 
 // استدعاء ملف المسارات الخاص بالمنتجات
 const productRoutes = require('./routes/productRoutes');

@@ -125,6 +125,9 @@ const translations = {
     registeredAt: "تاريخ التسجيل",
     noUsers: "لا يوجد مستخدمين",
     noInvoices: "لا توجد فواتير",
+    privacyPolicy: "سياسة الخصوصية",
+    termsConditions: "الشروط والأحكام",
+    allRightsReserved: "جميع الحقوق محفوظة.",
   },
   en: {
     name: "English",
@@ -249,6 +252,9 @@ const translations = {
     registeredAt: "Registered At",
     noUsers: "No users found",
     noInvoices: "No invoices",
+    privacyPolicy: "Privacy Policy",
+    termsConditions: "Terms & Conditions",
+    allRightsReserved: "All rights reserved.",
   },
 };
 

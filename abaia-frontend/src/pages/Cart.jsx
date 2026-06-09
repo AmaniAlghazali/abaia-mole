@@ -44,7 +44,7 @@ const Cart = ({ cart, setCart }) => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-base-200 to-base-300" style={{ textAlign: lang === "ar" ? "right" : "left" }}>
+    <div className="min-h-screen bg-gradient-to-b from-base-200 to-base-300">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         <div className="flex items-center gap-3 mb-6">
           <ShoppingCart size={24} className="text-primary" />

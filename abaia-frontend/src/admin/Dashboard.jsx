@@ -209,10 +209,9 @@ const Dashboard = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-base-200 via-base-100 to-base-200">
+    <div className="min-h-screen bg-linear-to-br from-base-200 via-base-100 to-base-200">
       <div
         className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-8"
-        style={{ textAlign: lang === "ar" ? "right" : "left" }}
       >
         {/* Header */}
         <div className="mb-6">
@@ -281,7 +280,9 @@ const Dashboard = () => {
             </div>
             <div className="text-center sm:text-start">
               <h3 className="font-bold text-base sm:text-lg mb-1">
-                {lang === "ar" ? "📷 امسح الرمز للدخول للمتجر" : "📷 Scan to visit the store"}
+                {lang === "ar"
+                  ? "📷 امسح الرمز للدخول للمتجر"
+                  : "📷 Scan to visit the store"}
               </h3>
               <p className="text-xs sm:text-sm text-base-content/50 mb-2">
                 {lang === "ar"

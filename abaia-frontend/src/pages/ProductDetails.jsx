@@ -167,7 +167,7 @@ const ProductDetails = ({ addToCart }) => {
   }
 
   return (
-    <div className="min-h-screen bg-base-200 px-4 sm:px-6 lg:px-8 py-8" style={{ textAlign: lang === "ar" ? "right" : "left" }}>
+    <div className="min-h-screen bg-base-200 px-4 sm:px-6 lg:px-8 py-8">
       <button onClick={() => navigate(-1)} className="btn btn-ghost btn-sm mb-4">
         ← {t("backToShop")}
       </button>

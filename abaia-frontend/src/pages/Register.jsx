@@ -36,7 +36,7 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-[calc(100vh-8rem)] flex items-center justify-center px-4 py-8 bg-gradient-to-b from-base-200 to-base-300" style={{ textAlign: lang === "ar" ? "right" : "left" }}>
+    <div className="min-h-[calc(100vh-8rem)] flex items-center justify-center px-4 py-8 bg-gradient-to-b from-base-200 to-base-300">
       <div className="card bg-base-100 shadow-lg border border-base-200/50 w-full max-w-sm">
         <div className="card-body p-5 sm:p-7">
           <div className="text-center mb-4">

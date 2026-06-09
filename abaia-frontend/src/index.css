@@ -8,3 +8,25 @@ body {
 #root {
   min-height: 100vh;
 }
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slide-in {
+  from { transform: translateX(var(--slide-from, -100%)); }
+  to { transform: translateX(0); }
+}
+
+.animate-fade-in {
+  animation: fade-in 250ms ease-out;
+}
+
+.animate-slide-in {
+  animation: slide-in 300ms ease-out;
+}
+
+[dir="rtl"] .animate-slide-in {
+  --slide-from: 100%;
+}
