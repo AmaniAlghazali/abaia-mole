@@ -1,0 +1,94 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+@theme inline {
+  --color-gold: #B8963E;
+  --color-gold-light: #D4AF6A;
+  --color-gold-dark: #8B6914;
+  --color-gold-faint: #F5EDD8;
+  --color-cream: #FAFAF8;
+  --color-charcoal: #1C1C1C;
+  --color-ink: #2D2D2D;
+  --color-muted: #7A7A7A;
+  --color-border: #E8E3DB;
+  --color-card: #FFFFFF;
+  --color-sidebar: #141414;
+  --color-sidebar-hover: #242424;
+}
+
+:root {
+  --background: #FAFAF8;
+  --foreground: #2D2D2D;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* RTL support */
+[dir="rtl"] {
+  font-family: 'Segoe UI', 'Arial', system-ui, sans-serif;
+}
+
+/* Gold scrollbar */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: #f1f1f1; }
+::-webkit-scrollbar-thumb { background: #B8963E; border-radius: 10px; }
+
+/* Smooth transitions */
+a, button { transition: all 0.2s ease; }
+
+/* Card hover */
+.product-card:hover .product-img { transform: scale(1.05); }
+
+/* Gold gradient text */
+.gold-text {
+  background: linear-gradient(135deg, #B8963E, #D4AF6A, #8B6914);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Shimmer loading */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.shimmer {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* Fade in animation */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.fade-up { animation: fadeUp 0.4s ease forwards; }
+
+/* Slide in from side */
+@keyframes slideIn {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+.slide-in { animation: slideIn 0.3s ease forwards; }
+
+[dir="rtl"] .slide-in {
+  animation-name: slideInRtl;
+}
+@keyframes slideInRtl {
+  from { transform: translateX(-100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
