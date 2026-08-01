@@ -1,7 +1,7 @@
 'use client';
 import { useLang } from '@/context/LangContext';
 
-const BACKEND = 'http://localhost:5000';
+const BACKEND = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:5000';
 
 function GoogleIcon() {
   return (
